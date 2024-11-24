@@ -164,6 +164,9 @@ body {
     color: #f0f0f0;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
     transition: transform 0.3s;
+    overflow: hidden;
+    word-wrap: break-word;
+    text-overflow: ellipsis;
 }
 
 .movie-item:hover {
@@ -171,14 +174,19 @@ body {
 }
 
 .movie-item h3 {
-    font-size: 20px;
+    font-size: 18px;
     margin-bottom: 10px;
     color: #ffffff;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
 }
 
 .movie-item p {
     font-size: 14px;
     color: #bbbbbb;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    text-align: center;
 }
 
 /* Movie Details Styling */

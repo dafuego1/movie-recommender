@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
 const GenreMovies = () => {
     const { genre } = useParams();
+    const navigate = useNavigate();
     const [movies, setMovies] = useState([]);
     const [loading, setLoading] = useState(true);
 
@@ -22,6 +23,10 @@ const GenreMovies = () => {
         fetchMoviesByGenre();
     }, [genre]);
 
+    const handleMovieClick = (movieTitle) => {
+        navigate(`/movie/${encodeURIComponent(movieTitle)}`);
+    };
+
     if (loading) {
         return <div>Loading movies...</div>;
     }
@@ -32,7 +37,12 @@ const GenreMovies = () => {
             <div className="movie-list">
                 {movies.length > 0 ? (
                     movies.map((movie, index) => (
-                        <div key={index} className="movie-item">
+                        <div
+                            key={index}
+                            className="movie-item"
+                            onClick={() => handleMovieClick(movie.title)}
+                            style={{ cursor: 'pointer' }}
+                        >
                             <h3>{movie.title}</h3>
                             <p>{movie.genres}</p>
                             <p>Rating: {movie.rating ? movie.rating.toFixed(1) : 'Not Available'}</p>
