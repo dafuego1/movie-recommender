@@ -6,8 +6,8 @@
 }
 
 body {
-    background-color: #121212; /* Darker background */
-    color: #f0f0f0; /* White text */
+    background-color: #121212;
+    color: #f0f0f0;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -30,6 +30,7 @@ body {
     padding: 15px 20px;
     width: 100%;
     box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
+    border-radius: 8px;
     position: sticky;
     top: 0;
     z-index: 1000;
@@ -126,17 +127,23 @@ body {
     color: #ffffff;
 }
 
+.suggestion-item.active {
+    background-color: #444444;
+    color: white;
+}
+
 .suggestion-item:hover {
     background-color: #444444;
 }
 
 /* Header Styles */
 .header {
-    text-align: center;
+    text-align: left;
     margin: 20px 0;
 }
 
 .header h1 {
+    text-align: center;
     font-size: 36px;
     margin-bottom: 10px;
     color: #ffffff;
@@ -152,7 +159,20 @@ body {
     display: flex;
     flex-wrap: wrap;
     gap: 20px;
+    justify-content: left;
+}
+
+.movie-list h2 {
+    text-align: left;
+    font-size: 28px;
+    color: #ffffff;
+}
+.movie-items {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
     justify-content: center;
+    margin-top: 20px;
 }
 
 .movie-item {
@@ -163,14 +183,14 @@ body {
     text-align: center;
     color: #f0f0f0;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-    transition: transform 0.3s;
+    transition: transform 0.3s, box-shadow 0.3s;
     overflow: hidden;
-    word-wrap: break-word;
-    text-overflow: ellipsis;
+    position: relative;
 }
 
 .movie-item:hover {
     transform: scale(1.05);
+    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.3);
 }
 
 .movie-item h3 {
@@ -246,7 +266,7 @@ body {
     width: 200px;
     text-align: center;
     color: #f0f0f0;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
     transition: transform 0.3s, box-shadow 0.3s;
     overflow: hidden;
     word-wrap: break-word;
@@ -258,8 +278,8 @@ body {
     margin-bottom: 10px;
     color: #ffffff;
     overflow: hidden;
-    text-overflow: ellipsis; /* Truncate text with ellipsis if too long */
-    white-space: nowrap; /* Prevent text from wrapping */
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
 .recommendation-card .genres {
@@ -267,8 +287,8 @@ body {
     color: #bbbbbb;
     margin-bottom: 10px;
     overflow: hidden;
-    word-wrap: break-word; /* Ensure text wraps within the card */
-    text-align: center; /* Center-align the text */
+    word-wrap: break-word;
+    text-align: center;
 }
 
 .recommendation-card .rating {
@@ -292,7 +312,6 @@ body {
     font-size: 14px;
     text-decoration: none;
     color: #ffffff;
-    background-color: #444;
     padding: 5px 10px;
     border: none;
     border-radius: 4px;
@@ -301,6 +320,24 @@ body {
 }
 
 .recommendation-card .view-details:hover {
+    background-color: #666;
+}
+
+.view-details {
+    font-size: 14px;
+    text-decoration: none;
+    color: #ffffff;
+    background-color: #444;
+    padding: 8px 15px;
+    border: none;
+    border-radius: 5px;
+    display: inline-block;
+    transition: background-color 0.3s;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+.view-details:hover {
     background-color: #666;
 }
 
@@ -316,7 +353,7 @@ body {
 /* Popular Genres Section */
 .genre-list {
     margin-top: 40px;
-    text-align: center;
+    text-align: left;
 }
 
 .genre-list h2 {
@@ -334,7 +371,7 @@ body {
 }
 
 .genre-item {
-    background-color: #1f1f1f; /* Match navbar and recommendation colors */
+    background-color: #1f1f1f;
     padding: 20px;
     border-radius: 8px;
     width: 200px;
@@ -371,4 +408,20 @@ body {
     font-size: 28px;
     margin-bottom: 20px;
     color: #ffffff;
+}
+
+.imdb-link {
+    font-size: 16px;
+    text-decoration: none;
+    color: #ffaa00;
+    margin-top: 15px;
+    display: inline-block;
+    background-color: #1f1f1f;
+    padding: 10px 15px;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+}
+
+.imdb-link:hover {
+    background-color: #444444;
 }

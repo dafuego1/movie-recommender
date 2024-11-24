@@ -14,15 +14,15 @@ const GenreList = () => {
             <div className="genre-items">
                 <div className="genre-item" onClick={() => handleGenreClick('Action')}>
                     <h3>Action</h3>
-                    <p>Explore Action movies</p>
+                    <p>Adrenaline Rush Starts Here</p>
                 </div>
                 <div className="genre-item" onClick={() => handleGenreClick('Comedy')}>
                     <h3>Comedy</h3>
-                    <p>Explore Comedy movies</p>
+                    <p>Tickle Your Funny Bone</p>
                 </div>
                 <div className="genre-item" onClick={() => handleGenreClick('Drama')}>
                     <h3>Drama</h3>
-                    <p>Explore Drama movies</p>
+                    <p>Where Emotions Run High</p>
                 </div>
             </div>
         </div>

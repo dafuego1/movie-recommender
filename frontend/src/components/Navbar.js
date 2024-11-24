@@ -5,6 +5,7 @@ import axios from 'axios';
 const Navbar = () => {
     const [suggestions, setSuggestions] = useState([]);
     const [searchTerm, setSearchTerm] = useState('');
+    const [activeSuggestion, setActiveSuggestion] = useState(-1);
     const navigate = useNavigate();
 
     const handleSearch = async () => {
@@ -34,6 +35,7 @@ const Navbar = () => {
         try {
             const response = await axios.get(`http://127.0.0.1:5000/search-suggestions?query=${query}`);
             setSuggestions(response.data);
+            setActiveSuggestion(-1);
         } catch (error) {
             console.error('Error fetching suggestions:', error);
         }
@@ -47,6 +49,22 @@ const Navbar = () => {
             fetchSuggestions(query);
         } else {
             setSuggestions([]);
+        }
+    };
+
+    const handleKeyDown = (e) => {
+        if (e.key === 'ArrowDown') {
+            setActiveSuggestion((prev) =>
+                Math.min(prev + 1, suggestions.length - 1)
+            );
+        } else if (e.key === 'ArrowUp') {
+            setActiveSuggestion((prev) => Math.max(prev - 1, 0));
+        } else if (e.key === 'Enter') {
+            if (activeSuggestion >= 0) {
+                handleSuggestionClick(suggestions[activeSuggestion]);
+            } else {
+                handleSearch();
+            }
         }
     };
 
@@ -68,6 +86,7 @@ const Navbar = () => {
                     name="search"
                     value={searchTerm}
                     onChange={handleInputChange}
+                    onKeyDown={handleKeyDown}
                     placeholder="Search for movies"
                 />
                 <button type="button" onClick={handleSearch}>
@@ -79,7 +98,9 @@ const Navbar = () => {
                             <li
                                 key={index}
                                 onClick={() => handleSuggestionClick(suggestion)}
-                                className="suggestion-item"
+                                className={`suggestion-item ${
+                                    activeSuggestion === index ? 'active' : ''
+                                }`}
                             >
                                 {suggestion}
                             </li>

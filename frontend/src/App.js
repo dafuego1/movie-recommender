@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import Header from './components/Header';
@@ -11,7 +11,21 @@ import './styles.css';
 
 function App() {
     const [movies, setMovies] = useState([]);
+    const [featuredMovies, setFeaturedMovies] = useState([]);
     const [searchTerm, setSearchTerm] = useState('');
+
+    // Fetch top-rated movies on mount
+    useEffect(() => {
+        const fetchTopRatedMovies = async () => {
+            try {
+                const response = await axios.get('http://127.0.0.1:5000/top-rated');
+                setFeaturedMovies(response.data);
+            } catch (error) {
+                console.error('Error fetching top-rated movies:', error);
+            }
+        };
+        fetchTopRatedMovies();
+    }, []);
 
     const fetchRecommendations = async () => {
         try {
@@ -38,7 +52,7 @@ function App() {
                     element={
                         <>
                             <Header />
-                            <MovieList movies={movies} />
+                            <MovieList movies={featuredMovies} />
                             <GenreList />
                         </>
                     }

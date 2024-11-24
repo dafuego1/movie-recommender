@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 const MovieList = ({ movies }) => {
     return (
@@ -11,8 +12,20 @@ const MovieList = ({ movies }) => {
                     movies.map((movie, index) => (
                         <div key={index} className="movie-item">
                             <h3>{movie.title}</h3>
-                            <p><strong>Rating:</strong> {movie.bayesian_rating.toFixed(1)}</p>
-                            <p><strong>Genres:</strong> {movie.genres}</p>
+                            <p>
+                                <strong>Rating:</strong>{" "}
+                                {movie.rating
+                                    ? movie.rating.toFixed(1)
+                                    : "Not Available"}
+                            </p>
+                            <p><strong>Genres:</strong> {movie.genres || "Not Available"}</p>
+                            {/* View Details Button */}
+                            <Link
+                                to={`/movie/${encodeURIComponent(movie.title)}`}
+                                className="view-details"
+                            >
+                                View Details
+                            </Link>
                         </div>
                     ))
                 )}
