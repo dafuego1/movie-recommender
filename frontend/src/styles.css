@@ -1,0 +1,366 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Arial', sans-serif;
+}
+
+body {
+    background-color: #121212; /* Darker background */
+    color: #f0f0f0; /* White text */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 0;
+}
+
+/* App Container */
+.app-container {
+    max-width: 1200px;
+    width: 90%;
+    margin-top: 20px;
+}
+
+/* Navbar Styles */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #1f1f1f;
+    padding: 15px 20px;
+    width: 100%;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+.navbar h2 {
+    color: #ffffff;
+    font-size: 24px;
+    cursor: pointer;
+    transition: none;
+}
+
+.navbar h2:hover {
+    color: #ffffff;
+}
+
+.search-container {
+    display: flex;
+    align-items: center;
+    position: relative;
+}
+
+.search-container input {
+    padding: 10px;
+    width: 300px;
+    border: 1px solid #444;
+    border-radius: 5px;
+    background-color: #2c2c2c;
+    color: #ffffff;
+    font-size: 16px;
+}
+
+.search-container button {
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.search-container button:hover {
+    background-color: #0056b3;
+}
+
+/* Featured Movies Styling */
+.featured-movies {
+    text-align: center;
+    margin-top: 30px;
+}
+
+.featured-movies h3 {
+    font-size: 28px;
+    color: #ffffff;
+    margin-bottom: 20px;
+}
+
+.featured-movies p {
+    font-size: 16px;
+    color: #bbbbbb;
+    margin-top: 10px;
+}
+
+/* Placeholder for No Recommendations */
+.no-recommendations {
+    font-size: 18px;
+    color: #ff4d4d;
+    margin-top: 10px;
+}
+
+/* Dropdown Styles */
+.suggestions-dropdown {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    background-color: #2c2c2c;
+    border-radius: 5px;
+    margin-top: 5px;
+    z-index: 1000;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    max-height: 200px;
+    overflow-y: auto;
+    list-style: none;
+    padding: 0;
+}
+
+.suggestion-item {
+    padding: 10px;
+    font-size: 16px;
+    cursor: pointer;
+    color: #ffffff;
+}
+
+.suggestion-item:hover {
+    background-color: #444444;
+}
+
+/* Header Styles */
+.header {
+    text-align: center;
+    margin: 20px 0;
+}
+
+.header h1 {
+    font-size: 36px;
+    margin-bottom: 10px;
+    color: #ffffff;
+}
+
+.header p {
+    font-size: 18px;
+    color: #bbbbbb;
+}
+
+/* Movie List Styles */
+.movie-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+}
+
+.movie-item {
+    background-color: #1f1f1f;
+    padding: 20px;
+    border-radius: 8px;
+    width: 250px;
+    text-align: center;
+    color: #f0f0f0;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    transition: transform 0.3s;
+}
+
+.movie-item:hover {
+    transform: scale(1.05);
+}
+
+.movie-item h3 {
+    font-size: 20px;
+    margin-bottom: 10px;
+    color: #ffffff;
+}
+
+.movie-item p {
+    font-size: 14px;
+    color: #bbbbbb;
+}
+
+/* Movie Details Styling */
+.movie-details {
+    max-width: 800px;
+    margin: 40px auto;
+    padding: 30px;
+    background-color: #2c2c2c;
+    border-radius: 10px;
+    text-align: center;
+    color: #f0f0f0;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+.movie-details h2 {
+    font-size: 32px;
+    margin-bottom: 10px;
+    color: #ffffff;
+}
+
+.movie-details .genres {
+    font-size: 18px;
+    color: #bbbbbb;
+    margin: 10px 0;
+}
+
+.movie-details .rating {
+    font-size: 18px;
+    color: #ffaa00;
+    margin-bottom: 20px;
+}
+
+.movie-details h3 {
+    font-size: 24px;
+    margin-top: 20px;
+    color: #ffffff;
+}
+
+/* Recommendations Section */
+.recommendations-section {
+    margin-top: 30px;
+    text-align: center;
+}
+
+.recommendations-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    justify-content: center;
+    margin-top: 15px;
+}
+
+.recommendation-card {
+    background-color: #1f1f1f;
+    border-radius: 8px;
+    padding: 15px;
+    width: 200px;
+    text-align: center;
+    color: #f0f0f0;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s, box-shadow 0.3s;
+    overflow: hidden;
+    word-wrap: break-word;
+    text-overflow: ellipsis;
+}
+
+.recommendation-card h4 {
+    font-size: 18px;
+    margin-bottom: 10px;
+    color: #ffffff;
+    overflow: hidden;
+    text-overflow: ellipsis; /* Truncate text with ellipsis if too long */
+    white-space: nowrap; /* Prevent text from wrapping */
+}
+
+.recommendation-card .genres {
+    font-size: 14px;
+    color: #bbbbbb;
+    margin-bottom: 10px;
+    overflow: hidden;
+    word-wrap: break-word; /* Ensure text wraps within the card */
+    text-align: center; /* Center-align the text */
+}
+
+.recommendation-card .rating {
+    font-size: 14px;
+    color: #ffaa00;
+    margin-bottom: 15px;
+}
+
+.recommendation-card a {
+    text-decoration: none;
+    color: #ffffff;
+    font-size: 14px;
+    background-color: #444;
+    padding: 5px 10px;
+    border-radius: 4px;
+    display: inline-block;
+    transition: background-color 0.3s;
+}
+
+.recommendation-card .view-details {
+    font-size: 14px;
+    text-decoration: none;
+    color: #ffffff;
+    background-color: #444;
+    padding: 5px 10px;
+    border: none;
+    border-radius: 4px;
+    display: inline-block;
+    transition: background-color 0.3s;
+}
+
+.recommendation-card .view-details:hover {
+    background-color: #666;
+}
+
+.recommendation-card:hover {
+    transform: scale(1.05);
+    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.3);
+}
+
+.recommendation-card a:hover {
+    background-color: #666;
+}
+
+/* Popular Genres Section */
+.genre-list {
+    margin-top: 40px;
+    text-align: center;
+}
+
+.genre-list h2 {
+    font-size: 28px;
+    margin-bottom: 30px;
+    color: #ffffff;
+}
+
+/* Genre Items as Cards */
+.genre-items {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.genre-item {
+    background-color: #1f1f1f; /* Match navbar and recommendation colors */
+    padding: 20px;
+    border-radius: 8px;
+    width: 200px;
+    text-align: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s, background-color 0.3s;
+    cursor: pointer;
+}
+
+.genre-item:hover {
+    transform: scale(1.05);
+    background-color: #444444;
+}
+
+.genre-item h3 {
+    font-size: 20px;
+    margin-bottom: 10px;
+    color: #ffffff;
+}
+
+.genre-item p {
+    font-size: 14px;
+    color: #bbbbbb;
+}
+
+/* Genre Page Styling */
+.genre-movies {
+    max-width: 1200px;
+    margin: 20px auto;
+    text-align: center;
+}
+
+.genre-movies h2 {
+    font-size: 28px;
+    margin-bottom: 20px;
+    color: #ffffff;
+}
