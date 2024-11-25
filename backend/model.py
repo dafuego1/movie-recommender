@@ -120,7 +120,7 @@ class ImprovedContentRecommender:
             self.movies_df['genres'].fillna('').apply(self.preprocess_text) + ' ' +
             self.movies_df['weighted_tag'].fillna('').apply(self.preprocess_text) + ' ' +
             self.movies_df['year'].astype(str) + ' ' +
-            (self.movies_df['bayesian_rating'] * 2).round(1).astype(str)
+            (self.movies_df['bayesian_rating'] * 2).round(2).astype(str)
         )
         
         #create TF-IDF matrix

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-
+import DOMPurify from 'dompurify';
 const Navbar = () => {
     const [suggestions, setSuggestions] = useState([]);
     const [searchTerm, setSearchTerm] = useState('');
@@ -9,17 +9,19 @@ const Navbar = () => {
     const navigate = useNavigate();
 
     const handleSearch = async () => {
-        if (!searchTerm.trim()) {
+        const sanitizedSearchTerm = DOMPurify.sanitize(searchTerm.trim());
+    
+        if (!sanitizedSearchTerm) {
             alert('Please enter a movie title.');
             return;
         }
-
+    
         try {
-            const encodedTitle = encodeURIComponent(searchTerm.trim());
+            const encodedTitle = encodeURIComponent(sanitizedSearchTerm);
             const response = await axios.get(
                 `http://127.0.0.1:5000/movie-details?movie_title=${encodedTitle}`
             );
-
+    
             if (response.data.movie) {
                 navigate(`/movie/${encodedTitle}`);
             } else {
@@ -43,10 +45,11 @@ const Navbar = () => {
 
     const handleInputChange = (e) => {
         const query = e.target.value;
-        setSearchTerm(query);
-
-        if (query.length > 1) {
-            fetchSuggestions(query);
+        const sanitizedQuery = DOMPurify.sanitize(query);
+        setSearchTerm(sanitizedQuery);
+    
+        if (sanitizedQuery.length > 1) {
+            fetchSuggestions(sanitizedQuery);
         } else {
             setSuggestions([]);
         }

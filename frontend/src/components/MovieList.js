@@ -15,7 +15,7 @@ const MovieList = ({ movies }) => {
                             <p className='rating'>
                                 <strong>Rating:{" "}
                                 {movie.avg_rating
-                                    ? movie.avg_rating.toFixed(1)
+                                    ? movie.avg_rating.toFixed(2)
                                     : "Not Available"}
                                     </strong>
                             </p>

@@ -44,7 +44,7 @@ const GenreMovies = () => {
                             style={{ cursor: 'pointer' }}
                         >
                             <h3>{movie.title}</h3>
-                            <p className="rating"><strong>Rating: {movie.avg_rating ? movie.avg_rating.toFixed(1) : 'Not Available'}</strong></p>
+                            <p className="rating"><strong>Rating: {movie.avg_rating ? movie.avg_rating.toFixed(2) : 'Not Available'}</strong></p>
                             <p>{movie.genres}</p>
                         </div>
                     ))
