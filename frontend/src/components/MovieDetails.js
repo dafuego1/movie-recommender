@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
 import axios from 'axios';
 
 const MovieDetails = () => {
@@ -26,6 +26,18 @@ const MovieDetails = () => {
         fetchMovieDetails();
     }, [movieTitle]);
 
+    const fetchRecommendationDetails = async (title) => {
+        try {
+            const response = await axios.get(
+                `http://127.0.0.1:5000/movie-details?movie_title=${encodeURIComponent(title)}`
+            );
+            return response.data.movie;
+        } catch (error) {
+            console.error(`Error fetching details for ${title}:`, error);
+            return null;
+        }
+    };
+
     if (loading) {
         return <div>Loading movie details...</div>;
     }
@@ -34,36 +46,69 @@ const MovieDetails = () => {
         <div className="movie-details">
             <h2>{movieDetails.title}</h2>
             <p className="genres">{movieDetails.genres || 'Genres not available'}</p>
-            <p className="rating">Rating: {movieDetails.rating || 'Not Available'}</p>
-            <p className="description">
-                Description: {movieDetails.description || 'Description not available'}
+            <p className="rating">
+            <strong>Rating: {movieDetails.rating || 'Not Available'}</strong>
             </p>
-            <a href={movieDetails.imdb_url} target="_blank" rel="noopener noreferrer" className="imdb-link">
-                View on IMDb
-            </a>
+            <p className="description">{movieDetails.description}</p>
+            {movieDetails.imdb_url && (
+                <a href={movieDetails.imdb_url} target="_blank" rel="noopener noreferrer" className="imdb-link">
+                    View on IMDb
+                </a>
+            )}
 
             <div className="recommendations-section">
                 <h3>Recommendations</h3>
                 <div className="recommendations-list">
                     {recommendations.length > 0 ? (
                         recommendations.map((rec, index) => (
-                            <div key={index} className="recommendation-card">
-                                <p>{rec}</p>
-                                <button
-                                    onClick={() =>
-                                        window.location.href = `/movie/${encodeURIComponent(rec)}`
-                                    }
-                                    className="view-details"
-                                >
-                                    View Details
-                                </button>
-                            </div>
+                            <RecommendationCard
+                                key={index}
+                                title={rec}
+                                fetchRecommendationDetails={fetchRecommendationDetails}
+                            />
                         ))
                     ) : (
                         <p>No recommendations available.</p>
                     )}
                 </div>
             </div>
+        </div>
+    );
+};
+
+const RecommendationCard = ({ title, fetchRecommendationDetails }) => {
+    const [details, setDetails] = useState(null);
+
+    useEffect(() => {
+        const fetchDetails = async () => {
+            const movieDetails = await fetchRecommendationDetails(title);
+            setDetails(movieDetails);
+        };
+
+        fetchDetails();
+    }, [title, fetchRecommendationDetails]);
+
+    if (!details) {
+        return (
+            <div className="recommendation-card">
+                <p>Loading...</p>
+            </div>
+        );
+    }
+
+    return (
+        <div className="recommendation-card">
+            <h4>{details.title}</h4>
+            <p className="genres">{details.genres || 'Genres not available'}</p>
+            <p className="rating">
+            <strong>Rating: {details.rating || 'Not Available'}</strong>
+            </p>
+            <button
+                onClick={() => window.location.href = `/movie/${encodeURIComponent(details.title)}`}
+                className="view-details"
+            >
+                View Details
+            </button>
         </div>
     );
 };

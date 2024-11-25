@@ -146,7 +146,7 @@ class ImprovedContentRecommender:
         popularity_penalty = scaler.fit_transform(
             self.movies_df[['rating_count']].values
         )
-        popularity_weight = 0.2
+    
         
         #calculate recency bonus
         current_year = 2018
@@ -154,11 +154,14 @@ class ImprovedContentRecommender:
         recency_bonus = scaler.fit_transform(
             (current_year - years).reshape(-1, 1)
         )
-        recency_weight = 0.1
         
+        popularity_weight = 0.1
+        recency_weight = 0.1
+        cosine_similarity_weight = 0.8
+
         #combine factors
         self.similarity_matrix = (
-            cosine_sim * (1 - popularity_weight - recency_weight) +
+            cosine_sim * cosine_similarity_weight +
             (popularity_penalty * popularity_weight) +
             (recency_bonus * recency_weight)
         ).astype(np.float32)

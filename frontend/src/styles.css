@@ -167,6 +167,12 @@ body {
     font-size: 28px;
     color: #ffffff;
 }
+
+.movie-list .rating {
+    font-size: 18px;
+    color: #ffaa00;
+}
+
 .movie-items {
     display: flex;
     flex-wrap: wrap;
@@ -408,6 +414,11 @@ body {
     font-size: 28px;
     margin-bottom: 20px;
     color: #ffffff;
+}
+
+.genre-movies .rating {
+    font-size: 18px;
+    color: #ffaa00;
 }
 
 .imdb-link {

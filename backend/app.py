@@ -84,13 +84,32 @@ def movie_details():
 @app.route('/top-rated', methods=['GET'])
 def top_rated_movies():
     try:
-        avg_ratings = ratings.groupby('movieId')['rating'].mean().reset_index()
-        top_movies = avg_ratings.merge(movies, on='movieId')
-        top_movies = top_movies.sort_values(by='rating', ascending=False).head(8)
-        result = top_movies[['title', 'genres', 'rating']].to_dict(orient='records')
+        # Calculate average rating and count of ratings for each movie
+        rating_stats = ratings.groupby('movieId').agg(
+            avg_rating=('rating', 'mean'),
+            rating_count=('rating', 'count')
+        ).reset_index()
+
+        # Filter movies with more than 30 ratings
+        filtered_movies = rating_stats[rating_stats['rating_count'] > 30]
+
+        # Merge with the movies dataframe
+        filtered_movies = filtered_movies.merge(movies, on='movieId', how='left')
+
+        # Round average rating to 1 decimal place
+        filtered_movies['avg_rating'] = filtered_movies['avg_rating'].round(1)
+
+        # Select top 8 movies based on average rating
+        top_movies = filtered_movies.sort_values(by='avg_rating', ascending=False).head(8)
+
+        # Format the response to include title, genres, and average rating
+        result = top_movies[['title', 'genres', 'avg_rating']].to_dict(orient='records')
+
         return jsonify(result)
     except Exception as e:
-        return jsonify({"error": "An error occurred while fetching top-rated movies."}), 500
+        return jsonify({"error": f"An error occurred: {str(e)}"}), 500
+
+
 
 #movie recommendations route
 @app.route('/recommend', methods=['GET'])
@@ -123,17 +142,32 @@ def movies_by_genre():
     try:
         # Filter movies containing the specified genre
         filtered_movies = movies[movies['genres'].str.lower().str.contains(genre, na=False)]
-        filtered_movies = filtered_movies.merge(
-            ratings.groupby('movieId')['rating'].mean().reset_index(),
-            on='movieId',
-            how='left'
-        )
-        top_movies = filtered_movies.sort_values(by='rating', ascending=False).head(30)
-        result = top_movies[['title', 'genres', 'rating']].to_dict(orient='records')
+
+        # Calculate average rating and count of ratings for each movie
+        rating_stats = ratings.groupby('movieId').agg(
+            avg_rating=('rating', 'mean'),
+            rating_count=('rating', 'count')
+        ).reset_index()
+
+        # Merge the filtered movies with the rating statistics
+        filtered_movies = filtered_movies.merge(rating_stats, on='movieId', how='left')
+
+        # Filter movies with more than 30 ratings
+        filtered_movies = filtered_movies[filtered_movies['rating_count'] > 30]
+
+        # Round average ratings to 1 decimal place
+        filtered_movies['avg_rating'] = filtered_movies['avg_rating'].round(1)
+
+        # Sort movies by average rating in descending order
+        top_movies = filtered_movies.sort_values(by='avg_rating', ascending=False).head(30)
+
+        # Format the response to include title, genres, and average rating
+        result = top_movies[['title', 'genres', 'avg_rating']].to_dict(orient='records')
+
         return jsonify(result)
-    
     except Exception as e:
-        return jsonify({"error": "An error occurred while fetching movies by genre."}), 500
+        return jsonify({"error": f"An error occurred: {str(e)}"}), 500
+
 
 if __name__ == '__main__':
     app.run(debug=True)

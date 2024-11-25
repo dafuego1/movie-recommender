@@ -12,13 +12,14 @@ const MovieList = ({ movies }) => {
                     movies.map((movie, index) => (
                         <div key={index} className="movie-item">
                             <h3>{movie.title}</h3>
-                            <p>
-                                <strong>Rating:</strong>{" "}
-                                {movie.rating
-                                    ? movie.rating.toFixed(1)
+                            <p className='rating'>
+                                <strong>Rating:{" "}
+                                {movie.avg_rating
+                                    ? movie.avg_rating.toFixed(1)
                                     : "Not Available"}
+                                    </strong>
                             </p>
-                            <p><strong>Genres:</strong> {movie.genres || "Not Available"}</p>
+                            <p> {movie.genres || "Not Available"}</p>
                             {/* View Details Button */}
                             <Link
                                 to={`/movie/${encodeURIComponent(movie.title)}`}
